@@ -40,7 +40,7 @@ def collect_human_trajectory(env, device, arm):
     
     ##
 
-    env._ee_close_to_cube()
+    # env._ee_close_to_cube()
 
     task_completion_hold_count = -1  # counter to collect 10 timesteps after reaching goal
     device.start_control()
@@ -58,13 +58,15 @@ def collect_human_trajectory(env, device, arm):
         for robot in env.robots
     ]
 
-    accel_left_finger_tip_id = env.sim.model.sensor_name2id('gripper0_right_accel_left_finger_tip')
-    accel_right_finger_tip_id = env.sim.model.sensor_name2id('gripper0_right_accel_right_finger_tip')
+    # accel_left_finger_tip_id = env.sim.model.sensor_name2id('gripper0_right_accel_left_finger_tip')
+    # accel_right_finger_tip_id = env.sim.model.sensor_name2id('gripper0_right_accel_right_finger_tip')
 
-    print("accel_left_finger_tip_id", accel_left_finger_tip_id)
-    print("accel_right_finger_tip_id", accel_right_finger_tip_id)
+    # print("accel_left_finger_tip_id", accel_left_finger_tip_id)
+    # print("accel_right_finger_tip_id", accel_right_finger_tip_id)
 
-
+    force_right_figertip_id = env.sim.model.sensor_name2id('gripper0_right_r_fingertip_force')
+    touch_right_figertip_id = env.sim.model.sensor_name2id('gripper0_right_r_fingertip_touch')
+    touch_left_figertip_id = env.sim.model.sensor_name2id('gripper0_right_l_fingertip_touch')
 
     # Loop until we get a reset from the input or the task completes
     while True:
@@ -113,7 +115,9 @@ def collect_human_trajectory(env, device, arm):
         # exit()
         # drawer.update(env.sim.data.sensordata[accel_left_finger_tip_id:accel_left_finger_tip_id+3])
 
-        send_acc_data(env.sim.data.sensordata[accel_left_finger_tip_id:accel_left_finger_tip_id+3])
+
+
+        send_acc_data([env.sim.data.sensordata[touch_right_figertip_id],env.sim.data.sensordata[touch_left_figertip_id],env.sim.data.sensordata[touch_right_figertip_id]])
 
         # Also break if we complete the task
         if task_completion_hold_count == 0:
@@ -231,8 +235,8 @@ if __name__ == "__main__":
         type=str,
         default=os.path.join(suite.models.assets_root, "demonstrations_private"),
     )
-    parser.add_argument("--environment", type=str, default="MyLift")
-    parser.add_argument("--robots", nargs="+", type=str, default="Panda", help="Which robot(s) to use in the env")
+    parser.add_argument("--environment", type=str, default="Lift")
+    parser.add_argument("--robots", nargs="+", type=str, default="Sawyer", help="Which robot(s) to use in the env")
     parser.add_argument(
         "--config", type=str, default="default", help="Specified environment configuration if necessary"
     )

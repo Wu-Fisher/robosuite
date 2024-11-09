@@ -21,15 +21,15 @@ line_y, = ax2.plot(data_y, label='Y')
 line_z, = ax3.plot(data_z, label='Z')
 
 # 设置每个子图的边界
-ax1.set_ylim(-5, 5)
+ax1.set_ylim(-10, 10)
 ax1.set_xlim(0, window_size)
 ax1.set_title('X Acceleration')
 
-ax2.set_ylim(-0.1, 0.1)
+ax2.set_ylim(-10, 10)
 ax2.set_xlim(0, window_size)
 ax2.set_title('Y Acceleration')
 
-ax3.set_ylim(-1, 1)
+ax3.set_ylim(-10, 10)
 ax3.set_xlim(0, window_size)
 ax3.set_title('Z Acceleration')
 
